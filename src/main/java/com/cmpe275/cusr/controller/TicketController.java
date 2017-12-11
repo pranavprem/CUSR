@@ -1,5 +1,6 @@
 package com.cmpe275.cusr.controller;
 
+import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,12 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTickets(userId));
     }
 
-   /* @PostMapping(value = "/book")
-    ResponseEntity bookTicket(@RequestParam(value="train") String train,
-                              @RequestPa)*/
+    @PostMapping(value = "/{id}/ticket/book")
+    ResponseEntity bookTicket(@RequestBody Ticket ticket) {
+        return ResponseEntity.ok("Ticket Booked Successfully");
+    }
+
+   /* @PutMapping(value = "/{id}/ticket/cancel")
+    ResponseEntity cancelTicket(@RequestAttribute)*/
 
 }

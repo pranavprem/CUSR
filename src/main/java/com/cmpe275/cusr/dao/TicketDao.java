@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface TicketDao extends CrudRepository<Ticket, Long> {
 
-    @Query("select Ticket from ticket t where t.userId = ?1")
-    List<Ticket> findAllByUserId(long id);
+    List<Ticket> findAllByUserId(long userId);
 }
