@@ -24,6 +24,8 @@ public class Ticket {
     private long cost;
     @Embedded
     private Passenger passenger;
+    @Column(name = "userId")
+    private long userId;
 
     public long getId() {
         return id;
@@ -87,5 +89,13 @@ public class Ticket {
 
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

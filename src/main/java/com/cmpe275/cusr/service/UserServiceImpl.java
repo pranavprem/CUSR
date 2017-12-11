@@ -1,11 +1,13 @@
 package com.cmpe275.cusr.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cmpe275.cusr.dao.UserDao;
 import com.cmpe275.cusr.model.User;
 
-public class userServiceImpl implements userService{
+@Service
+public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDao userDao;

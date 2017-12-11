@@ -1,6 +1,7 @@
 package com.cmpe275.cusr.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table ( name = "user")
@@ -20,7 +21,7 @@ public class User {
     private String token;
     /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "tickets")
     @JoinTable(name = "user_tickets")*/
-    //private List<Ticket>  tickets;/
+    /*private List<Ticket>  tickets;*/
 
     public long getId() {
         return id;
