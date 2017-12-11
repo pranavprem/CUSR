@@ -1,7 +1,9 @@
 package com.cmpe275.cusr.model;
 
 import javax.persistence.*;
+import java.util.List;
 
+@Entity
 @Table ( name = "user")
 public class User {
 
@@ -17,9 +19,9 @@ public class User {
     private String email;
     @Column(name = "token")
     private String token;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "")
     @JoinTable(name = "user_ticket")
-    private Ticket  ticket;
+    private List<Ticket>  tickets;
 
     public long getId() {
         return id;
@@ -61,11 +63,12 @@ public class User {
         this.token = token;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+
+    public void setTicket(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }
