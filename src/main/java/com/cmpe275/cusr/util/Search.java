@@ -120,8 +120,8 @@ public class Search {
 			time3.setHours(time3.getHours()+temp/60);
 			time3.setMinutes(time3.getMinutes()+temp%60);
 		}
-		System.out.println(train2+String.format("%02d%02d", hrs, min));
-		System.out.println(df.format(time3));
+		train2=train2+String.format("%02d%02d", hrs, min);
+
 		
 		
 		train3=this.search((char)(j+65), to, df.format(time3));
@@ -167,6 +167,9 @@ public class Search {
 				hrs++;
 				i=0;
 			}
+			if ((t%5!=0 || f%5!=0) && i==0){
+				i+=15;
+			}
 			return("SB"+String.format("%02d%02d", hrs, i));
 		}else {
 			t = 90-(int)to;
@@ -190,6 +193,9 @@ public class Search {
 			if(i==60) {
 				hrs++;
 				i=0;
+			}
+			if ((t%5!=0 || f%5!=0) && i==0){
+				i+=15;
 			}
 			return("NB"+String.format("%02d%02d", hrs, i));
 		}
