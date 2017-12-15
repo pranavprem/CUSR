@@ -38,6 +38,15 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.findOne(id);
 	}
+
+	@Override
+	public User findbyemail(String email) {
+		// TODO Auto-generated method stub
+		User user = userDao.findByemail(email);
+		return user;
+	}
+
+
 	
 
 }

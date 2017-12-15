@@ -15,10 +15,13 @@ public class User {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "token")
     private String token;
+    
+	@Column(name = "password")
+    private String password;
     /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "tickets")
     @JoinTable(name = "user_tickets")*/
     /*private List<Ticket>  tickets;*/
@@ -62,6 +65,15 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+    
+    public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 /*    public List<Ticket> getTickets() {
         return tickets;
