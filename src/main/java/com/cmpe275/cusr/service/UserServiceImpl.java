@@ -44,9 +44,6 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		User user = userDao.findByemail(email);
 		return user;
-	}
-
-
-	
+	}	
 
 }

@@ -18,8 +18,7 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
     @Column(name = "token")
-    private String token;
-    
+    private String token;    
 	@Column(name = "password")
     private String password;
     /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "tickets")

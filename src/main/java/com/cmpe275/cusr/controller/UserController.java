@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.service.UserService;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
 public class UserController {
