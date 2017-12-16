@@ -10,4 +10,20 @@ public class Passenger {
     private String name;
     @Column(name = "seatNumber")
     private long seatNumber;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(long seatNumber) {
+        this.seatNumber = seatNumber;
+    }
 }

@@ -3,6 +3,7 @@ package com.cmpe275.cusr.controller;
 import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +20,31 @@ public class TicketController {
     }
 
     @GetMapping(value = "/{id}/ticket")
-    ResponseEntity getAllTicket(@PathVariable("id") long userId) {
+    ResponseEntity getTickets(@PathVariable("id") long userId) {
         return ResponseEntity.ok(ticketService.getTickets(userId));
+    }
+
+    @GetMapping(value = "/ticket")
+    ResponseEntity getAllTickets() {
+        return ResponseEntity.ok(ticketService.getAllTicket());
     }
 
     @PostMapping(value = "/{id}/ticket/book")
     ResponseEntity bookTicket(@RequestBody Ticket ticket) {
-        return ResponseEntity.ok("Ticket Booked Successfully");
+        return ResponseEntity.ok(ticketService.addTicket(ticket));
     }
 
-   /* @PutMapping(value = "/{id}/ticket/cancel")
-    ResponseEntity cancelTicket(@RequestAttribute)*/
+    @DeleteMapping(value = "{id}/ticket/{tid}")
+    ResponseEntity cancelTicket(@PathVariable("tid") long ticketId) {
+
+        try
+        {
+            return ResponseEntity.ok(ticketService.deleteTicket(ticketId));
+        }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("It's too late");
+        }
+
+    }
 
 }

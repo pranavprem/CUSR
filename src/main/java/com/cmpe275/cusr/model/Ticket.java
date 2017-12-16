@@ -1,6 +1,7 @@
 package com.cmpe275.cusr.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table (name = "ticket")
@@ -23,7 +24,7 @@ public class Ticket {
     @Column(name = "cost")
     private long cost;
     @Embedded
-    private Passenger passenger;
+    private List<Passenger> passenger;
     @Column(name = "userId")
     private long userId;
 
@@ -83,11 +84,11 @@ public class Ticket {
         this.cost = cost;
     }
 
-    public Passenger getPassenger() {
+    public List<Passenger> getPassenger() {
         return passenger;
     }
 
-    public void setPassenger(Passenger passenger) {
+    public void setPassenger(List<Passenger> passenger) {
         this.passenger = passenger;
     }
 
