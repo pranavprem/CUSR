@@ -15,6 +15,7 @@ export default class TicketLayout extends React.Component {
   componentDidMount() {
     console.log("it did this");
     var url = "http://52.90.170.105:8080/"+this.state.userid+"/ticket/"+this.state.ticketid;
+    console.log(url);
     fetch(url, 
           {
             method: 'GET',

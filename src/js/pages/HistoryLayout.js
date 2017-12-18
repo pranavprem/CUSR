@@ -14,7 +14,7 @@ export default class HistoryLayout extends React.Component {
 
   componentDidMount() {
     console.log("it did this");
-    var url = "http://52.90.170.105:8080/"+this.state.userid+"/ticket/";
+    var url = "https://52.90.170.105:8080/"+this.state.userid+"/ticket/";
     fetch(url, 
           {
             method: 'GET',

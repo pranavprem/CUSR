@@ -13,7 +13,7 @@ export default class UserLayout extends React.Component {
 
   Login() {
     console.log("it did this");
-    var url = "http://52.90.170.105:8080/"+this.state.userid+"/ticket/"+this.state.ticketid;
+    var url = "https://52.90.170.105:8080/"+this.state.userid+"/ticket/"+this.state.ticketid;
     fetch(url, 
           {
             method: 'GET',
