@@ -24,7 +24,7 @@ export default class SearchLayout extends React.Component {
     this.setState({"trains":result[0].trains,"arrival":result[0].arrivalTime});
   }
   Search(from, to, time){
-    var url = "http://localhost:8080/search/"+this.state.from+"/"+this.state.to+"/"+"15:30";
+    var url = "http://52.90.170.105/search/"+this.state.from+"/"+this.state.to+"/"+"15:30";
     fetch(url, 
           {
             method: 'GET',

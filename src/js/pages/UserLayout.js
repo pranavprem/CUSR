@@ -13,7 +13,7 @@ export default class UserLayout extends React.Component {
 
   Login() {
     console.log("it did this");
-    var url = "http://localhost:8080/"+this.state.userid+"/ticket/"+this.state.ticketid;
+    var url = "http://52.90.170.105/"+this.state.userid+"/ticket/"+this.state.ticketid;
     fetch(url, 
           {
             method: 'GET',
@@ -36,12 +36,7 @@ export default class UserLayout extends React.Component {
     return (
       <div className="container">
         <Header/>
-        <h1> Ticket </h1>
         
-
-        {
-          this.state && this.state.ticket && <TicketDisplay ticket={this.state.ticket}/>
-        }
         <Footer/>
       </div>    
     );
