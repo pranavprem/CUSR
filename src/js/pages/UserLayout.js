@@ -14,7 +14,7 @@ export default class UserLayout extends React.Component {
     this.state={"email":null};  
   }
   
-  responseFacebook = (response, this) => {
+  responseFacebook = (response) => {
       this.setState({"email":response.email});
     }
 
