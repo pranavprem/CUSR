@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FacebookLogin from 'react-facebook-login';
 import {GoogleLogin} from 'react-google-login-component';
+import {Link} from 'react-router-dom' 
 
 import Header from "../components/Header.js"
 import Footer from "../components/Footer.js"
@@ -14,7 +15,7 @@ export default class UserLayout extends React.Component {
     this.state={"email":null};  
   }
   
-  responseFacebook = (response) => {
+  responseFacebook (response) {
       this.setState({"email":response.email});
     }
 
