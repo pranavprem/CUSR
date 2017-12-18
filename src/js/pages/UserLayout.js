@@ -14,7 +14,7 @@ export default class UserLayout extends React.Component {
     this.state={"email":null};  
   }
   
-  responseFacebook = (response) => {
+  responseFacebook = (response, this) => {
       this.setState({"email":response.email});
     }
 
@@ -56,7 +56,7 @@ export default class UserLayout extends React.Component {
         
         <Footer/>
 
-        {this.state.email && <link to='/search'>Proceed, {this.state.email}</link>}
+        {this.state.email && <Link to='/search'>Proceed, {this.state.email}</Link>}
 
       </div>    
     );
