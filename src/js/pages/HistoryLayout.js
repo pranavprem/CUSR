@@ -34,7 +34,7 @@ export default class HistoryLayout extends React.Component {
     //   this.setState({name:"Pranav2"});
     // },2000);
     return (
-      <div class="container">
+      <div className="container">
         <Header/>
         <h1> Ticket History </h1>
         <div>

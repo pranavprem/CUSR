@@ -53,7 +53,7 @@ export default class TicketDisplay extends React.Component{
           </tr>
           <tr>
             <td>Passengers</td>
-            <td colspan='2'> 
+            <td colSpan='2'> 
             {this.props.ticket.passenger.map(pass => <span>{pass.name} <br/></span>)}
               {/* <div id ="passengers"></div> */}
             </td>
