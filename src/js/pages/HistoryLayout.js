@@ -35,13 +35,13 @@ export default class HistoryLayout extends React.Component {
     // },2000);
     return (
       <div className="container">
-        <Header/>
+        
         <h1> Ticket History </h1>
         <div>
             {this.state && this.state.tickets  &&  this.state.tickets.map(ticket => <TicketDisplay ticket={ticket} />)}
         
         </div>
-        <Footer/>
+        
       </div>    
     );
   }

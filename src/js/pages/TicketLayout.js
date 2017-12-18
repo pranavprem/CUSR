@@ -37,14 +37,14 @@ export default class TicketLayout extends React.Component {
     // },2000);
     return (
       <div className="container">
-        <Header/>
+        
         <h1> Ticket </h1>
         
 
         {
           this.state && this.state.ticket && <TicketDisplay ticket={this.state.ticket}/>
         }
-        <Footer/>
+        
       </div>    
     );
   }

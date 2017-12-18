@@ -16,7 +16,8 @@ export default class UserLayout extends React.Component {
   }
   
   responseFacebook = (response) => {
-      this.setState({"email":response.email});
+      this.props.setemail(response.email);
+      this.props.setcurrent("search");
     }
 
   responseGoogle (googleUser) {
@@ -30,15 +31,15 @@ export default class UserLayout extends React.Component {
             }
           })
           .then(result => result.json())
-          .then(item => this.setState({"email":item.email}));
-        
+          .then(item => this.props.setemail(item.email));
+        this.props.setcurrent("search");
       }
   
   render() {
     
     return (
       <div className="container">
-        <Header/>
+        
 
         <FacebookLogin
         appId="164569124158280"
@@ -55,9 +56,14 @@ export default class UserLayout extends React.Component {
                      responseHandler={this.responseGoogle}
                      buttonText="Login With Google"/>
         
-        <Footer/>
 
-        {this.state.email && <Link to='/search'>Proceed, {this.state.email}</Link>}
+        {/* {this.state.email && <Link to='/search'>Proceed, {this.state.email}</Link>} */}
+        
+        
+        
+        
+
+        
 
       </div>    
     );

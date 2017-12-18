@@ -42,12 +42,12 @@ export default class SearchLayout extends React.Component {
     // },2000);
     return (
       <div class="container">
-        <Header/>
+        
           <h1>Search</h1>
         <Search Search={this.Search.bind(this)} SetFrom={this.SetFrom.bind(this)} SetTo={this.SetTo.bind(this)} From={this.state.from} To={this.state.to}/>
         <br/><br/><br/><br/><br/><br/>
         {this.state.trains && this.state.arrival && <Result trains={this.state.trains} arrival={this.state.arrival}/>}
-        <Footer/>
+        
       </div>    
     );
   }
