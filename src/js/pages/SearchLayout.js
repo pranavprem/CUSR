@@ -95,7 +95,7 @@ export default class SearchLayout extends React.Component {
   }
   
   Search(from, to, time){
-    if(this.state.type == "express")
+    if(this.state.type == "Express")
     {  var url = "http://52.90.170.105:80/search/"+this.props.getfrom()+"/"+this.props.getto()+"/"+this.props.gettime();
       fetch(url, 
             {
