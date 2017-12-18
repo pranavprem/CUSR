@@ -10,33 +10,34 @@ import Footer from "../components/Footer.js"
 
 export default class UserLayout extends React.Component {
   constructor(){
-    super();  
+    super();
+    this.state={"email":null};  
   }
   
   responseFacebook = (response) => {
-      console.log(response);
+      this.setState({"email":response.email});
     }
 
   responseGoogle (googleUser) {
         var id_token = googleUser.getAuthResponse().id_token;
-        console.log({accessToken: id_token});
-        //anything else you want to do(save to localStorage)...
+        var url = ""+id_token;
+        fetch(url, 
+          {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+          })
+          .then(result => result.json())
+          .then(item => this.setState({"email":item.email}));
+        
       }
   
   render() {
-    // setTimeout(()=>{
-    //   this.setState({name:"Pranav2"});
-    // },2000);
+    
     return (
       <div className="container">
         <Header/>
-
-        {/*  <FacebookLogin
-            appId="164569124158280"
-            autoLoad={true}
-            fields="name,email"
-            onClick={componentClicked}
-            callback={responseFacebook} /> */}
 
         <FacebookLogin
         appId="164569124158280"
@@ -54,6 +55,9 @@ export default class UserLayout extends React.Component {
                      buttonText="Login With Google"/>
         
         <Footer/>
+
+        {this.state.email && <link to='/search'>Proceed, {this.state.email}</link>}
+
       </div>    
     );
   }
