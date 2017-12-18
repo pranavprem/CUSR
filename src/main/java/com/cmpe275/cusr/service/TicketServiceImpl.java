@@ -84,6 +84,22 @@ public class TicketServiceImpl implements TicketService{
     }
 
     @Override
+    public Ticket getTicketDetail(long ticketId) {
+        Ticket ticket = ticketDao.findOne(ticketId);
+        ticket.setPassenger(passengerDao.findAllByTicketId(ticket.getId()));
+
+        List<TicketDetail> trainIds = ticketDetailDao.findAllByTicketId(ticket.getId());
+        List<Train> trains = new ArrayList<>();
+        for( TicketDetail ticketDetail : trainIds) {
+            trains.add(trainDao.findOne(ticketDetail.getTrainId()));
+        }
+
+        ticket.setTrains(trains);
+
+        return ticket;
+    }
+
+    @Override
     public Ticket deleteTicket(long ticketId) {
         Ticket ticket = ticketDao.findOne(ticketId);
 

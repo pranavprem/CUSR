@@ -27,6 +27,11 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTickets(userId));
     }
 
+    @GetMapping(value = "/{id}/ticket/{tid}")
+    ResponseEntity getTicket(@PathVariable("id") long userId, @PathVariable("tid") long ticketId){
+        return ResponseEntity.ok(ticketService.getTicketDetail(ticketId));
+    }
+
     @GetMapping(value = "cancel")
     ResponseEntity cancelTrain(@RequestParam("trainId") String trainId) {
 

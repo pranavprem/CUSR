@@ -20,4 +20,6 @@ public interface TicketService {
     long getSeatAvailable(String trainId);
 
     void cancelTrain(String trainId);
+
+    Ticket getTicketDetail(long ticketId);
 }
