@@ -8,8 +8,8 @@ export default class Result extends React.Component{
     // },2000);
     return (
      	<div class="container">
-     	  <p>{this.props.trains}</p>
-        <p>{this.props.arrival}</p>
+     	  <p>Trains that need to be taken: {this.props.trains.join(", ")}</p>
+        <p>Arrival Time at Destination: {this.props.arrival}</p>
 		  </div>    
     );
   }
