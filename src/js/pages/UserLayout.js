@@ -12,7 +12,7 @@ import Footer from "../components/Footer.js"
 export default class UserLayout extends React.Component {
   constructor(){
     super();
-    this.state={"email":null};  
+    //this.state={"email":null};  
   }
   
   responseFacebook = (response) => {

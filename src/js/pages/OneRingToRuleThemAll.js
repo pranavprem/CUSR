@@ -43,6 +43,8 @@ export default class Layout extends React.Component{
     this.settrains.bind(this);
     this.setuserid.bind(this);
     }
+
+
     getemail(){
         return this.state.email;
     }
@@ -108,7 +110,7 @@ export default class Layout extends React.Component{
     return (
       <div>
           <Header />
-            {this.state.current=="user" && <UserLayout setcurrent= {this.setcurrent} setuserid={this.setuserid} setemail={this.setemail} />}
+            {this.state.current=="user" && <UserLayout setcurrent= {this.setcurrent.bind(this)} setuserid={this.setuserid} setemail={this.setemail.bind(this)} />}
             {this.state.current=="search" && <SearchLayout setcurrent={this.setcurrent} settrains={this.settrains} setarrival={this.setarrival} settime={this.settime} setfrom={this.setfrom} setto={this.setto}/>}
             {this.state.current=="ticket" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid} getticketid={this.getticketid}/>}
             {this.state.current=="history" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid}/>}
