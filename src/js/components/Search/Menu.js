@@ -6,21 +6,27 @@ import React from "react";
 export default class menu extends React.Component{
 	constructor(){
 		super();
-    this.options=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-	}
+    
+  }
+
+  componentDidMount(){
+    console.log(this.props.options);
+  }
+  
 
 	render() {
-    // setTimeout(()=>{
-    //   this.setState({name:"Pranav2"});
-    // },2000);
-    var Setter = this.props.Setter;
+    
+    var setter = this.props.setter;
+    var getter = this.props.getter;
+    var options = this.props.options;
+    console.log(this.props);
     return (
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{this.props.SetValue}
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{getter()}
         <span class="caret"></span></button>
         <ul class="dropdown-menu" >
-          {this.options.map(function(listValue){
-            return <li> <a href="#" onClick={()=>{Setter({listValue})}} > {listValue} </a> </li>;
+          {options.map(function(listValue){
+            return <li> <a href="#" key={getter()+listValue} onClick={()=>{setter({listValue})}} > {listValue} </a> </li>;
           })}  
         </ul>
 

@@ -22,29 +22,23 @@ export default class Layout extends React.Component{
         "from":"Station",
         "to":"Station",
         "time":null,
+        "date":null,
+        "time2":null
         };
-    this.getemail.bind(this);
-    this.getuserid.bind(this);
-    this.getarrival.bind(this);
-    this.getfrom.bind(this);
-    this.getto.bind(this);
-    this.gettime.bind(this);
-    this.gettrains.bind(this);
-    this.getticket.bind(this);
-    this.getticketid.bind(this);
-    this.setarrival.bind(this);
-    this.setcurrent.bind(this);
-    this.setemail.bind(this);
-    this.setfrom.bind(this);
-    this.setticketid.bind(this);
-    this.setticket.bind(this);
-    this.settime.bind(this);
-    this.setto.bind(this);
-    this.settrains.bind(this);
-    this.setuserid.bind(this);
+    
     }
-
-
+    settime2(time2){
+        this.setState({"time2":time2});
+    }
+    gettime2(){
+        return this.state.time2;
+    }
+    setdate(date){
+        this.setState({"date":date});
+    }
+    getdate(){
+        return this.state.date;
+    }
     getemail(){
         return this.state.email;
     }
@@ -75,6 +69,16 @@ export default class Layout extends React.Component{
     
     setemail(email){
         this.setState({"email":email});
+        var url = "http://52.90.170.105:80/sociallogin?email="+email;
+        fetch(url, 
+              {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+              })
+        .then(result => result.json())
+        .then(item => this.setuserid(item));
     }
     setuserid(userid){
         this.setState({"userid":userid});
@@ -111,7 +115,7 @@ export default class Layout extends React.Component{
       <div>
           <Header />
             {this.state.current=="user" && <UserLayout setcurrent= {this.setcurrent.bind(this)} setuserid={this.setuserid} setemail={this.setemail.bind(this)} />}
-            {this.state.current=="search" && <SearchLayout setcurrent={this.setcurrent} settrains={this.settrains} setarrival={this.setarrival} settime={this.settime} setfrom={this.setfrom} setto={this.setto}/>}
+            {this.state.current=="search" && <SearchLayout getfrom={this.getfrom.bind(this)} getto={this.getto.bind(this)} getdate={this.getdate.bind(this)} gettime={this.gettime.bind(this)} gettime2={this.gettime2.bind(this)} settime2={this.settime2.bind(this)} setcurrent={this.setcurrent.bind(this)} settrains={this.settrains.bind(this)} gettrains={this.gettrains.bind(this)} setdate={this.setdate.bind(this)} getarrival={this.getarrival.bind(this)} setarrival={this.setarrival.bind(this)} settime={this.settime.bind(this)} setfrom={this.setfrom.bind(this)} setto={this.setto.bind(this)} setticketid={this.setticketid.bind(this)}/>}
             {this.state.current=="ticket" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid} getticketid={this.getticketid}/>}
             {this.state.current=="history" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid}/>}
 
