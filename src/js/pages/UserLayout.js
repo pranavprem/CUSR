@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import FacebookLogin from 'react-facebook-login';
+import {GoogleLogin} from 'react-google-login-component';
 
 import Header from "../components/Header.js"
 import Footer from "../components/Footer.js"
@@ -15,6 +16,12 @@ export default class UserLayout extends React.Component {
   responseFacebook = (response) => {
       console.log(response);
     }
+
+  responseGoogle (googleUser) {
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log({accessToken: id_token});
+        //anything else you want to do(save to localStorage)...
+      }
   
   render() {
     // setTimeout(()=>{
@@ -37,6 +44,12 @@ export default class UserLayout extends React.Component {
         fields="name,email,picture"
         callback={this.responseFacebook}
       />
+        <GoogleLogin socialId="887093608373-qpgq6rm2adpa6mnik8c1v69f45tdj2kt.apps.googleusercontent.com"
+                     className="google-login"
+                     scope="profile"
+                     fetchBasicProfile={false}
+                     responseHandler={this.responseGoogle}
+                     buttonText="Login With Google"/>
         
         <Footer/>
       </div>    
