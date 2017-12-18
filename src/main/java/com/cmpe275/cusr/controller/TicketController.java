@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class TicketController {
 
@@ -22,6 +25,25 @@ public class TicketController {
     @GetMapping(value = "/{id}/ticket")
     ResponseEntity getTickets(@PathVariable("id") long userId) {
         return ResponseEntity.ok(ticketService.getTickets(userId));
+    }
+
+    @GetMapping(value = "cancel")
+    ResponseEntity cancelTrain(@RequestParam("trainId") String trainId) {
+
+        return ResponseEntity.ok("train cancelled");
+    }
+
+    @GetMapping(value = "/reset")
+    ResponseEntity resetData(@RequestParam("seats") String seats) {
+            ticketService.resetData(Long.parseLong(seats));
+        return ResponseEntity.ok("Data has been reset");
+    }
+
+    @GetMapping(value = "/seats")
+    ResponseEntity getSeats(@RequestParam("trainId") String trainId) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("seats" ,ticketService.getSeatAvailable(trainId));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "/ticket")

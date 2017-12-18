@@ -3,35 +3,17 @@ package com.cmpe275.cusr.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "passenger")
-public class Passenger {
+@Table(name = "ticketDetail")
+public class TicketDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "seatNumber")
-    private long seatNumber;
+    @Column(name = "trainId")
+    private String trainId;
     @Column(name = "ticketId")
     private long ticketId;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(long seatNumber) {
-        this.seatNumber = seatNumber;
-    }
 
     public long getId() {
         return id;
@@ -39,6 +21,14 @@ public class Passenger {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getTrainId() {
+        return trainId;
+    }
+
+    public void setTrainId(String trainId) {
+        this.trainId = trainId;
     }
 
     public long getTicketId() {
