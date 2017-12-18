@@ -42,12 +42,14 @@ export default class UserLayout extends React.Component {
         appId="164569124158280"
         autoLoad={true}
         fields="name,email,picture"
-        callback={this.responseFacebook}
-      />
+        callback={this.responseFacebook} />
+      
+        <br/>
+
         <GoogleLogin socialId="887093608373-qpgq6rm2adpa6mnik8c1v69f45tdj2kt.apps.googleusercontent.com"
                      className="google-login"
                      scope="profile"
-                     fetchBasicProfile={false}
+                     fetchBasicProfile={true}
                      responseHandler={this.responseGoogle}
                      buttonText="Login With Google"/>
         
