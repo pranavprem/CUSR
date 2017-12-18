@@ -65,6 +65,20 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Credentials!");
 		}
 	}
+
+	@GetMapping(value = "sociallogin")
+	public ResponseEntity socialLogin(@RequestParam("email") String email) {
+		User user  = userService.findbyemail(email);
+
+		if (user != null)
+			return ResponseEntity.ok(user);
+
+		user = new User();
+		user.setEmail(email);
+		userService.addUser(user);
+
+		return ResponseEntity.ok(userService.findbyemail(email));
+	}
 	
 	@GetMapping(value = "/user/{id}")
 	public ResponseEntity<?> getUser(@PathVariable("id") long userId){
