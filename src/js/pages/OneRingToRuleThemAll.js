@@ -70,7 +70,7 @@ export default class Layout extends React.Component{
     
     setemail(email){
         this.setState({"email":email});
-        var url = "http://52.90.170.105:80/sociallogin?email="+email;
+        var url = "http://52.90.170.105:80/sociallogin?email="+email+"&name=Djangoooo";
         fetch(url, 
               {
                 method: 'GET',
@@ -79,7 +79,7 @@ export default class Layout extends React.Component{
                 }
               })
         .then(result => result.json())
-        .then(item => console.log(item));
+        .then(item => this.setuserid(item.userid));
     }
     setuserid(userid){
         this.setState({"userid":userid});
