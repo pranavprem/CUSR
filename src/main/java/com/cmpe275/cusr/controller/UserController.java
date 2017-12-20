@@ -45,15 +45,25 @@ public class UserController {
 		
 		try {
 			
-			User user = new User();
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setEmail(email);
-			user.setToken(token);
-			user.setPassword(password);
-		
-			this.userService.addUser(user);
-			return ResponseEntity.ok(user);
+			User user1 = this.userService.findbyemail(email);
+			
+			if (user1 == null) {
+			
+				User user = new User();
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setEmail(email);
+				user.setToken(token);
+				user.setPassword(password);						
+				
+				this.userService.addUser(user);
+				return ResponseEntity.ok(user);
+				
+			}else {
+				
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists.");
+
+			}
 		
 		} catch (Exception e) {
 			
@@ -160,15 +170,25 @@ public class UserController {
 					return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User Found.");
 					
 				}else {
-				
-					user.setFirstName(firstName);
-					user.setLastName(lastName);
-					user.setEmail(email);
-					user.setToken(token);
 					
-					this.userService.updateUser(user);			
+					User user1 = this.userService.findbyemail(email);
+					
+					if (user1 == null) {
+				
+						user.setFirstName(firstName);
+						user.setLastName(lastName);
+						user.setEmail(email);
+						user.setToken(token);
+					
+						this.userService.updateUser(user);			
 			
-					return ResponseEntity.ok(user);
+						return ResponseEntity.ok(user);
+					
+					}else {
+						
+						return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists.");
+
+					}
 				}			
 				
 				
