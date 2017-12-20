@@ -1,16 +1,17 @@
 package com.cmpe275.cusr.controller;
 
-import com.cmpe275.cusr.model.Ticket;
-import com.cmpe275.cusr.model.User;
+import com.cmpe275.cusr.model.*;
 import com.cmpe275.cusr.service.EmailService;
 import com.cmpe275.cusr.service.TicketService;
 import com.cmpe275.cusr.service.UserService;
 
+import com.cmpe275.cusr.util.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,9 +88,18 @@ public class TicketController {
     	
     }
 
+    @GetMapping(value = "cost")
+	ResponseEntity getCost(@RequestParam("from") String from,
+						   @RequestParam("to") String to,
+						   @RequestParam("count") int count,
+						   @RequestParam("trainFare") int trainFare){
+			return ResponseEntity.ok(ticketService.cost(from, to, count, trainFare));
+	}
+
     @GetMapping(value = "cancel")
     ResponseEntity cancelTrain(@RequestParam("trainId") String trainId) {
-    	 	
+
+
         return ResponseEntity.ok("Train Cancelled");
         
     }
@@ -159,17 +169,48 @@ public class TicketController {
 
     @PostMapping(value = "/{id}/ticket/book")
     ResponseEntity bookTicket(@PathVariable("id") long id,
-    		@RequestBody Ticket ticket) {
+    		@RequestBody BookRequest bookRequest) {
     	try {
-    		
+    	    Ticket ticket = new Ticket();
+    	    ticket.setUserId(bookRequest.getUserId());
+    	    ticket.setCost(bookRequest.getCost());
+    	    int count = 0;
+    	    List<Train> trains = new ArrayList<>();
+    	    for (int i =0; i< bookRequest.getTrains().size(); i++) {
+                Train train = new Train();
+                train.setTrain(bookRequest.getTrains().get(i));
+
+                if (bookRequest.getTrains().get(count).equals(bookRequest.getRoute().get(count + 1)))
+                    count++;
+
+                train.setDepartureStation(bookRequest.getRoute().get(count++));
+                train.setArrivalStation(bookRequest.getRoute().get(count));
+
+                train.setDepartureTime(train.getTrain().substring(2,6));
+                train.setArrivalTime(new Search().findtime(train.getTrain(), train.getArrivalStation().charAt(0)));
+
+                trains.add(train);
+            }
+            List<Passenger> passengers = new ArrayList<>();
+
+    	    for (int i =0 ;i < bookRequest.getPassengers().size() ;i++) {
+    	        Passenger passenger = new Passenger();
+    	        passenger.setName(bookRequest.getPassengers().get(i));
+    	        passengers.add(passenger);
+            }
+            ticket.setTrains(trains);
+            ticket.setPassenger(passengers);
+    	    ticket = ticketService.addTicket(ticket);
     		User user = userService.getUser(id);
     		String email = user.getEmail();
     		String subject = "Ticket Booking Confirmation";
     		String body = ticketService.getEmailBody(ticket);    		
     		
-    		emailService.send("california.usr@gmail.com", email, subject, body);    		
+    		emailService.send("california.usr@gmail.com", email, subject, body);
+
+
     		    		
-            return ResponseEntity.ok(ticketService.addTicket(ticket));
+            return ResponseEntity.ok(ticket);
 
     	} catch (Exception e) {
 			

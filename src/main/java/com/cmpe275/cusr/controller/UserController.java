@@ -93,7 +93,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/sociallogin")
-	public ResponseEntity socialLogin(@RequestParam("email") String email) {
+	public ResponseEntity socialLogin(@RequestParam("email") String email, @RequestParam("name") String name) {
 		User user;
 		try {
 			user = userService.findbyemail(email);
@@ -104,6 +104,7 @@ public class UserController {
 
 			user = new User();
 			user.setEmail(email);
+			user.setFirstName(name);
 			userService.addUser(user);
 
 			return ResponseEntity.ok(userService.findbyemail(email));

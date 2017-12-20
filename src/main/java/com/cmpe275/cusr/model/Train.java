@@ -59,6 +59,7 @@ public class Train {
 	}
 
 	public String getArrivalTime() {
+
 		return arrivalTime;
 	}
 

@@ -8,4 +8,6 @@ import java.util.List;
 public interface TicketDetailDao extends CrudRepository<TicketDetail, Long>{
 
     List<TicketDetail> findAllByTicketId(long ticketId);
+
+    List<TicketDetail> findAllByTrainId(String trainId);
 }

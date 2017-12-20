@@ -12,7 +12,12 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,7 +63,6 @@ public class TicketServiceImpl implements TicketService{
     public Ticket addTicket(Ticket ticket) throws Exception {
     	
     	try {
-    		
     	
         Ticket ticket1 = ticketDao.save(ticket);
         for(Passenger passenger : ticket.getPassenger()){
@@ -68,6 +72,23 @@ public class TicketServiceImpl implements TicketService{
         ticket1.setPassenger(ticket.getPassenger());
 
         for (Train train : ticket1.getTrains()) {
+            /*int hour = Integer.parseInt(train.getDepartureTime().split(":")[0]);
+            int minute = Integer.parseInt(train.getDepartureTime().split(":")[1]);
+            int day = Integer.parseInt(train.getTrain().substring(5).split("/")[1].split("/")[0]);
+            int month = Integer.parseInt(train.getTrain().substring(5).split("/")[0]);;
+            int year = Integer.parseInt(train.getTrain().substring(5).split("/")[1].split("/")[1]);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+            cal.set(Calendar.DAY_OF_MONTH, day);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.YEAR, year);
+            Date date = cal.getTime();*/
+            String depTime = train.getDepartureTime() + train.getTrain().substring(6);
+            String arrTime = train.getArrivalTime() + train.getTrain().substring(6);
+
+            train.setDepartureTime(depTime);
+            train.setArrivalTime(arrTime);
             TicketDetail ticketDetail = new TicketDetail();
             ticketDetail.setTicketId(ticket1.getId());
             ticketDetail.setTrainId(train.getTrain());
@@ -136,13 +157,28 @@ public class TicketServiceImpl implements TicketService{
     @Override
     public Ticket deleteTicket(long ticketId) throws Exception{
     	try {
-    		
-        Ticket ticket = ticketDao.findOne(ticketId);
+
+            Ticket ticket = ticketDao.findOne(ticketId);
+            ticket.setPassenger(passengerDao.findAllByTicketId(ticket.getId()));
+            List<TicketDetail> trainIds = ticketDetailDao.findAllByTicketId(ticket.getId());
+            List<Train> trains = new ArrayList<>();
+            for( TicketDetail ticketDetail : trainIds) {
+                trains.add(trainDao.findOne(ticketDetail.getTrainId()));
+            }
+
+            ticket.setTrains(trains);
 
         if (ticket == null)
             return null;
 
-        DateTime departureTime = new DateTime(Long.parseLong(ticket.getTrains().get(0).getDepartureTime())*1000L);
+            Date depDate = null;
+            DateFormat df = new SimpleDateFormat("HHmmMM/dd/yyyy");
+            try{
+                depDate = df.parse(ticket.getTrains().get(0).getDepartureTime());
+            }catch(ParseException p) {
+                p.printStackTrace();
+            }
+        DateTime departureTime = new DateTime(depDate);
         if (departureTime.minusHours(1).isAfterNow()) {
             ticketDao.delete(ticketId);
 
@@ -203,5 +239,30 @@ public class TicketServiceImpl implements TicketService{
         }        
         body += "</body></html>";        
         return body;		
-	}    
+	}
+
+    @Override
+    public int cost(String o, String d, int pcount, int trainfare)
+    {
+        char co = o.charAt(0);
+        char cd = d.charAt(0);
+        int diff = Math.abs(co-cd);
+        int cost = diff/5;
+
+        return (diff%5 > 0 ? cost + 1 : cost) * pcount * trainfare;
+    }
+
+    @Override
+    public void trainCancel(String trainId) {
+        List<TicketDetail> ticketDetails = ticketDetailDao.findAllByTrainId(trainId);
+
+        for (TicketDetail ticketDetail : ticketDetails) {
+            try {
+                deleteTicket(ticketDetail.getTicketId());
+                ticketDetailDao.delete(ticketDetail.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

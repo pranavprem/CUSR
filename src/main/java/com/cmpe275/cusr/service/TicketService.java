@@ -24,4 +24,8 @@ public interface TicketService {
     Ticket getTicketDetail(long ticketId) throws Exception;
     
     String getEmailBody(Ticket ticket) throws Exception;
+
+    int cost(String o, String d, int pcount, int trainfare);
+
+    void trainCancel(String trainId);
 }
