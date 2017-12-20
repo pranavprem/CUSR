@@ -51,7 +51,7 @@ public class Search {
 		}
 		else {
 			time2=dep;
-			train1="NIL";
+			train1=null;
 		}
 		System.out.println(train1);
 		System.out.println(df.format(time2));
@@ -126,7 +126,7 @@ public class Search {
 		
 		train3=this.search((char)(j+65), to, df.format(time3));
 		
-		return train1+","+train2+","+train3;
+		return train1+","+train2+","+train3+"---"+from+","+(char)(i+65)+","+(char)(j+65)+","+to;
 		
 		
 	}
@@ -146,7 +146,7 @@ public class Search {
 		
 		//System.out.println(to);
 		if(to==from) {
-			return "error";
+			return null;
 		}
 		else if ((int)to>(int)from) {
 			t = (int)to - 65;
@@ -170,7 +170,9 @@ public class Search {
 			if ((t%5!=0 || f%5!=0) && i==0){
 				i+=15;
 			}
+			
 			return("SB"+String.format("%02d%02d", hrs, i));
+			
 		}else {
 			t = 90-(int)to;
 			f = 90-(int)from;
@@ -197,6 +199,8 @@ public class Search {
 			if ((t%5!=0 || f%5!=0) && i==0){
 				i+=15;
 			}
+			
+			
 			return("NB"+String.format("%02d%02d", hrs, i));
 		}
 		
@@ -204,6 +208,7 @@ public class Search {
 	
 	public String findtime(String train, Character station) {
 		DateFormat df = new SimpleDateFormat("HHmm");
+		DateFormat df2 = new SimpleDateFormat("HH:mm");
 		Date dep = null;
 		int temp;
 		
@@ -224,7 +229,7 @@ public class Search {
 		
 	
 		
-		return df.format(dep);
+		return df2.format(dep);
 	}
 
 }
