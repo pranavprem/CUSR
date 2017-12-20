@@ -6,6 +6,7 @@ import com.cmpe275.cusr.service.TicketService;
 import com.cmpe275.cusr.service.UserService;
 
 import com.cmpe275.cusr.util.Search;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -171,6 +172,7 @@ public class TicketController {
     ResponseEntity bookTicket(@PathVariable("id") long id,
     		@RequestBody BookRequest bookRequest) {
     	try {
+    	    System.out.println(new ObjectMapper().writeValueAsString(bookRequest));
     	    Ticket ticket = new Ticket();
     	    ticket.setUserId(bookRequest.getUserId());
     	    ticket.setCost(bookRequest.getCost());
