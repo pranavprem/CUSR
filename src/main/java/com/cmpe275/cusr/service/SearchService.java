@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SearchService {
 	List<SearchResult> search(Character from, Character to, String time);
+	List<SearchResult> searchround(Character from, Character to, String time, String roundTrip,String time2);
 }
