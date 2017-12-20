@@ -9,9 +9,7 @@ export default class menu extends React.Component{
     
   }
 
-  componentDidMount(){
-    console.log(this.props.options);
-  }
+  
   
 
 	render() {
@@ -19,7 +17,6 @@ export default class menu extends React.Component{
     var setter = this.props.setter;
     var getter = this.props.getter;
     var options = this.props.options;
-    console.log(this.props);
     return (
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{getter()}

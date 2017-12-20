@@ -10,17 +10,39 @@ import Result from "../components/Result.js"
 export default class SearchLayout extends React.Component {
   constructor(){
     super();
-    this.state = {"round":"No","passengers":1, "type":"Regular","pass":["","","","",""]}; 
+    this.state = {"round":"No","passengers":1, "type":"Regular", "pass":["","","","",""], "result":null, "time2":null, "date2":null}; 
     this.setround = this.setround.bind(this);
     this.setpassengers = this.setpassengers.bind(this);
     this.settype = this.settype.bind(this);
     this.getround = this.getround.bind(this);
     this.getpassengers = this.getpassengers.bind(this);
     this.gettype = this.gettype.bind(this);
+    this.getresult = this.getresult.bind(this);
+    this.setresult = this.setresult.bind(this);
+    this.settime2 = this.settime2.bind(this);
+    this.gettime2 = this.gettime2.bind(this);
+    this.getdate2 = this.getdate2.bind(this);
+    this.setdate2 = this.setdate2.bind(this);
+  }
+
+  setdate2(date2){
+    this.setState({"date2":date2});
+  }
+
+  getdate2(){
+    return this.state.date2;
   }
 
   getpass(){
     return this.state.pass;
+  }
+
+  getresult(){
+    return this.state.result;
+  }
+
+  setresult(result){
+    this.setState({"result":result});
   }
 
   setpass1(name){
@@ -74,6 +96,14 @@ export default class SearchLayout extends React.Component {
   }
 
 
+  settime2(time2){
+    this.setState({"time2":time2});
+  }
+
+  gettime2(){
+    return this.state.time2;
+  }
+
   SetFrom(from){
     this.props.setfrom(from.listValue);
   }
@@ -82,21 +112,36 @@ export default class SearchLayout extends React.Component {
   }
 
   Handle(items){
-    var i;
-    var trains="", arrivalTime="";
-    trains += items[0].trains;
-    arrivalTime += items[0].arrivalTime;
-    for(i=1;i<items.length();++i){
-      trains += "," + items[i].trains;
-      arrivalTime += "," + items[i].arrivalTime;
-    }
-    this.props.settrains(trains);
-    this.props.setarrival(arrivalTime);
+    // var i;
+    console.log(items);
+    // var trains=[], arrivalTime=[];
+    // //var ele = document.getElementById("results");
+    // var inside = "";
+    
+    // for(i=0;i<items.length;++i){
+    //   trains [i]= items[i].trains;
+    //   arrivalTime [i]= items[i].arrivalTime;
+    //   inside +="<Result pass={this.props.getpass} trains={["+items[i].trains+"]} arrival={"+items[i].arrivalTime+"} setticketid={this.props.setticketid} From={this.props.getfrom} To={this.props.getto}/>";
+
+
+
+    // }
+    // this.props.settrains(trains);
+    // this.props.setarrival(arrivalTime);
+
+    // console.log(inside);
+    // console.log(ele);
+    //ele.innerHTML=inside;
+    this.setState({"result":items});
+
+
+
   }
   
   Search(from, to, time){
-    if(this.state.type == "Express")
-    {  var url = "http://52.90.170.105:80/search/"+this.props.getfrom()+"/"+this.props.getto()+"/"+this.props.gettime();
+    var url = "http://52.90.170.105:80/search/"+this.props.getfrom()+"/"+this.props.getto()+"/"+this.props.gettime()+"/"+this.getround()+'/'+this.gettime2();
+    
+      
       fetch(url, 
             {
               method: 'GET',
@@ -106,30 +151,22 @@ export default class SearchLayout extends React.Component {
             })
       .then(result => result.json())
       .then(items => this.Handle(items));
-    }
-    else {
-      var url = "http://52.90.170.105:80/searchregular/"+this.props.getfrom()+"/"+this.props.getto()+"/"+this.props.gettime();
-      fetch(url, 
-            {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-            })
-      .then(result => result.json())
-      .then(items => this.Handle(items));
-    }
-
   }
+
+  done(){
+    this.props.setcurrent("history");
+  }
+
   render() {
     
     return (
       <div class="container">
           <h1>Search</h1>
-        <Search pass1={this.setpass1.bind(this)} pass2={this.setpass2.bind(this)} pass3={this.setpass3.bind(this)} pass4={this.setpass4.bind(this)} pass5={this.setpass5.bind(this)} settype = {this.settype} gettype={this.gettype} setround={this.setround} getround={this.getround} setpassengers={this.setpassengers} getpassengers={this.getpassengers} Search={this.Search.bind(this)} setfrom={this.SetFrom.bind(this)} setto={this.SetTo.bind(this)} getfrom={this.props.getfrom} getto={this.props.getto} settime={this.props.settime} setdate={this.props.setdate}/>
+        <Search getdate2={this.setdate2} setdate2={this.setdate2} gettime2={this.gettime2} settime2={this.settime2} pass1={this.setpass1.bind(this)} pass2={this.setpass2.bind(this)} pass3={this.setpass3.bind(this)} pass4={this.setpass4.bind(this)} pass5={this.setpass5.bind(this)} settype = {this.settype} gettype={this.gettype} setround={this.setround} getround={this.getround} setpassengers={this.setpassengers} getpassengers={this.getpassengers} Search={this.Search.bind(this)} setfrom={this.SetFrom.bind(this)} setto={this.SetTo.bind(this)} getfrom={this.props.getfrom} getto={this.props.getto} settime={this.props.settime} setdate={this.props.setdate}/>
         <br/><br/><br/><br/><br/><br/>
-        {this.props.gettrains() && this.props.getarrival() && <Result pass={this.props.getpass} trains={this.props.gettrains} arrival={this.props.getarrival} setticketid={this.props.setticketid} From={this.props.getfrom} To={this.props.getto}/>}
-        
+        <div id="results"></div>
+        {this.state.result && this.state.result.map(res=><Result round={this.state.round} userid={this.props.userid} date1={this.props.getdate()} date2={this.state.date2} passengers={this.state.pass} trains={res.trains} arrivalTime={res.arrivalTime} arrivalTime2={res.arrivalTime2} route={res.route} cost={res.cost} />)} 
+        <button class="btn" onClick={()=>{this.done}}>DONE</button>   
       </div>    
     );
   }

@@ -4,6 +4,7 @@ import HistoryLayout from "./HistoryLayout"
 import SearchLayout from "./SearchLayout"
 import TicketLayout from "./TicketLayout"
 import UserLayout from "./UserLayout"
+import RegisterLayout from "./RegisterLayout"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 
@@ -14,7 +15,7 @@ export default class Layout extends React.Component{
     this.state = {
         "current":"user",
         "email":null,
-        "userid": null,
+        "userid": 1,
         "ticketid": null,
         "ticket": null,
         "trains": null,
@@ -78,7 +79,7 @@ export default class Layout extends React.Component{
                 }
               })
         .then(result => result.json())
-        .then(item => this.setuserid(item));
+        .then(item => this.setuserid(item.userid));
     }
     setuserid(userid){
         this.setState({"userid":userid});
@@ -114,11 +115,11 @@ export default class Layout extends React.Component{
     return (
       <div>
           <Header />
-            {this.state.current=="user" && <UserLayout setcurrent= {this.setcurrent.bind(this)} setuserid={this.setuserid} setemail={this.setemail.bind(this)} />}
-            {this.state.current=="search" && <SearchLayout getfrom={this.getfrom.bind(this)} getto={this.getto.bind(this)} getdate={this.getdate.bind(this)} gettime={this.gettime.bind(this)} gettime2={this.gettime2.bind(this)} settime2={this.settime2.bind(this)} setcurrent={this.setcurrent.bind(this)} settrains={this.settrains.bind(this)} gettrains={this.gettrains.bind(this)} setdate={this.setdate.bind(this)} getarrival={this.getarrival.bind(this)} setarrival={this.setarrival.bind(this)} settime={this.settime.bind(this)} setfrom={this.setfrom.bind(this)} setto={this.setto.bind(this)} setticketid={this.setticketid.bind(this)}/>}
-            {this.state.current=="ticket" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid} getticketid={this.getticketid}/>}
-            {this.state.current=="history" && <SearchLayout setcurrent={this.setcurrent} getuserid={this.getuserid}/>}
-
+            {this.state.current=="user" && <UserLayout setcurrent= {this.setcurrent.bind(this)} setuserid={this.setuserid.bind(this)} setemail={this.setemail.bind(this)} />}
+            {this.state.current=="search" && <SearchLayout userid={this.state.userid} getfrom={this.getfrom.bind(this)} getto={this.getto.bind(this)} getdate={this.getdate.bind(this)} gettime={this.gettime.bind(this)} gettime2={this.gettime2.bind(this)} settime2={this.settime2.bind(this)} setcurrent={this.setcurrent.bind(this)} settrains={this.settrains.bind(this)} gettrains={this.gettrains.bind(this)} setdate={this.setdate.bind(this)} getarrival={this.getarrival.bind(this)} setarrival={this.setarrival.bind(this)} settime={this.settime.bind(this)} setfrom={this.setfrom.bind(this)} setto={this.setto.bind(this)} setticketid={this.setticketid.bind(this)}/>}
+            {this.state.current=="ticket" && <TicketLayout setcurrent={this.setcurrent.bind(this)} getuserid={this.getuserid.bind(this)} getticketid={this.getticketid.bind(this)}/>}
+            {this.state.current=="history" && <HistoryLayout setcurrent={this.setcurrent.bind(this)} getuserid={this.getuserid.bind(this)} setticketid={this.setticketid.bind(this)}/>}
+            {this.state.current=="register" && <RegisterLayout/>}
 
           <Footer />
 
