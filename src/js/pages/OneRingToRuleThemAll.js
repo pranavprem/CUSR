@@ -79,7 +79,7 @@ export default class Layout extends React.Component{
                 }
               })
         .then(result => result.json())
-        .then(item => this.setuserid(item.userid));
+        .then(item => console.log(item));
     }
     setuserid(userid){
         this.setState({"userid":userid});
