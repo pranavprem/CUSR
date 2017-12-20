@@ -75,7 +75,7 @@ public class UserController {
 				
 			if (user.getPassword().equals(password)) {
 				
-				return ResponseEntity.ok("Success!");
+				return ResponseEntity.ok(user);
 			
 			}else {
 			
