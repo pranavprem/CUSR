@@ -30,7 +30,10 @@ public class TicketServiceImpl implements TicketService{
     private static long TOTAL_SEATS = 1000;
 
     @Override
-    public List<Ticket> getTickets(long userId) {
+    public List<Ticket> getTickets(long userId) throws Exception {
+    	
+    	try {
+    		
         List<Ticket> tickets = ticketDao.findAllByUserId(userId);
         for(Ticket ticket: tickets){
             ticket.setPassenger(passengerDao.findAllByTicketId(ticket.getId()));
@@ -44,10 +47,19 @@ public class TicketServiceImpl implements TicketService{
         }
 
         return tickets;
+    	}catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
-    public Ticket addTicket(Ticket ticket) {
+    public Ticket addTicket(Ticket ticket) throws Exception {
+    	
+    	try {
+    		
+    	
         Ticket ticket1 = ticketDao.save(ticket);
         for(Passenger passenger : ticket.getPassenger()){
             passenger.setTicketId(ticket1.getId());
@@ -67,15 +79,29 @@ public class TicketServiceImpl implements TicketService{
         }
 
         return ticket1;
+    	
+    	}catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
-    public long getSeatAvailable(String ticketId) {
+    public long getSeatAvailable(String ticketId) throws Exception {
+    	
+    	try {
         Train train = trainDao.findOne(ticketId);
         if( train != null)
             return TOTAL_SEATS - train.getSeats();
 
         return TOTAL_SEATS;
+    	
+    	}catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
@@ -84,7 +110,9 @@ public class TicketServiceImpl implements TicketService{
     }
 
     @Override
-    public Ticket getTicketDetail(long ticketId) {
+    public Ticket getTicketDetail(long ticketId) throws Exception {
+    	
+    	try {
         Ticket ticket = ticketDao.findOne(ticketId);
         ticket.setPassenger(passengerDao.findAllByTicketId(ticket.getId()));
 
@@ -97,10 +125,18 @@ public class TicketServiceImpl implements TicketService{
         ticket.setTrains(trains);
 
         return ticket;
+    	
+    	}catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
-    public Ticket deleteTicket(long ticketId) {
+    public Ticket deleteTicket(long ticketId) throws Exception{
+    	try {
+    		
         Ticket ticket = ticketDao.findOne(ticketId);
 
         if (ticket == null)
@@ -112,11 +148,25 @@ public class TicketServiceImpl implements TicketService{
 
             return ticket;
         } else throw new IllegalStateException();
+        
+    	}catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
-    public List<Ticket> getAllTicket() {
-        return (List<Ticket>) ticketDao.findAll();
+    public List<Ticket> getAllTicket() throws Exception {
+        try {
+        	
+        	return (List<Ticket>) ticketDao.findAll();
+        
+        }catch(Exception e) {
+    		
+			throw new Exception();
+
+    	}
     }
 
     @Override
@@ -128,4 +178,30 @@ public class TicketServiceImpl implements TicketService{
         ticketDetailDao.deleteAll();
         //TODO reset train, ticket, passenger and ticketdetail table
     }
+
+	@Override
+	public String getEmailBody(Ticket ticket) throws Exception {
+		// TODO Auto-generated method stub
+				
+		String body = "";
+		
+		body += "<html><body>Your booking has been confirmed. Ticket Details are as below:<br>";		
+		body += "<p><b>" + "Cost: " + "</b>$"+ ticket.getCost() + "</p>";		
+		body += "<p><b> Passengers: </b></p>";				
+        for(Passenger passenger : ticket.getPassenger()){
+        	body += "<p>" + passenger.getName() + "</p>";
+        
+        }        	
+        body += "<p><b>Trains: </b></p>";        
+        for (Train train : ticket.getTrains()) {        	
+        	body += "<p>Train: " + train.getTrain() + "</p>";
+        	body += "<p>Departure Station: " + train.getDepartureStation() + "</p>";
+        	body += "<p>Arrival Station: " + train.getArrivalStation() + "</p>";
+        	body += "<p>Departure Time: " + train.getDepartureTime().substring(0, 2) + ":" + train.getDepartureTime().substring(2, 4) + "</p>";
+        	body += "<p>Arrival Time: " + train.getArrivalTime().substring(0, 2) + ":" + train.getArrivalTime().substring(2, 4) + "</p>";
+        	body += "<br>";    	
+        }        
+        body += "</body></html>";        
+        return body;		
+	}    
 }

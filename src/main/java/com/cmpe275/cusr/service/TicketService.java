@@ -7,19 +7,21 @@ import java.util.List;
 
 public interface TicketService {
 
-    List<Ticket> getTickets(long userId);
+    List<Ticket> getTickets(long userId) throws Exception;
 
-    Ticket addTicket(Ticket ticket);
+    Ticket addTicket(Ticket ticket) throws Exception;
 
-    Ticket deleteTicket(long ticketId);
+    Ticket deleteTicket(long ticketId) throws Exception;
 
-    List<Ticket> getAllTicket();
+    List<Ticket> getAllTicket() throws Exception;
 
-    void resetData(long seats);
+    void resetData(long seats) throws Exception;
 
-    long getSeatAvailable(String trainId);
+    long getSeatAvailable(String trainId) throws Exception;
 
-    void cancelTrain(String trainId);
+    void cancelTrain(String trainId) throws Exception;
 
-    Ticket getTicketDetail(long ticketId);
+    Ticket getTicketDetail(long ticketId) throws Exception;
+    
+    String getEmailBody(Ticket ticket) throws Exception;
 }
