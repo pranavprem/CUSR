@@ -12,6 +12,7 @@ public class SearchResult implements Comparable<SearchResult>{
     String arrivalTime2;
     int cost;
     List<String> route;
+    int seats;
 
     public List<String> getTrains() {
         return trains;
@@ -51,6 +52,14 @@ public class SearchResult implements Comparable<SearchResult>{
 
 	public void setArrivalTime2(String arrivalTime2) {
 		this.arrivalTime2 = arrivalTime2;
+	}
+	
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
 	}
 
 	@Override

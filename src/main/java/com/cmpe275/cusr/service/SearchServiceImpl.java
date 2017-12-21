@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmpe275.cusr.util.Search;
@@ -21,6 +22,9 @@ import com.cmpe275.cusr.util.SearchResult;
 
 @Service
 public class SearchServiceImpl implements SearchService {
+	
+	@Autowired
+	TicketService ticketService;
 
 
 	@Override
@@ -98,14 +102,24 @@ public class SearchServiceImpl implements SearchService {
 			route.remove(0);
 		}
 		int fare = 0;
+		int seats = 1000;
 		for (String train : trainsList) {
 			fare += cost(route.get(0), route.get(route.size() -1),1,train);
+			try {
+				if(ticketService.getSeatAvailable(train)<seats)seats=(int) ticketService.getSeatAvailable(train);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		result.setTrains(trainsList);
 		result.setRoute(route);
 		result.setCost(fare);
 		returnlist.add(result);
-		
+		if(seats==0) {
+			return null;
+		}
+		result.setSeats(seats);
 		return result;
 	}
 
@@ -138,11 +152,22 @@ public class SearchServiceImpl implements SearchService {
 		result.setTrains(trainsList);
 		result.setRoute(route);
 		int fare = 0;
+		int seats = 1000;
 		for (String train : trainsList) {
 			fare += cost(route.get(0), route.get(route.size() -1),1,train);
+			try {
+				if(ticketService.getSeatAvailable(train)<seats)seats=(int) ticketService.getSeatAvailable(train);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		result.setCost(fare);
 		returnlist.add(result);
+		if(seats==0) {
+			return null;
+		}
+		result.setSeats(seats);
 		return result;
 	}
 
