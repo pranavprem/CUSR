@@ -100,7 +100,7 @@ public class TicketController {
     @GetMapping(value = "cancel")
     ResponseEntity cancelTrain(@RequestParam("trainId") String trainId) {
 
-
+		ticketService.trainCancel(trainId);
         return ResponseEntity.ok("Train Cancelled");
         
     }

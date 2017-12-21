@@ -260,6 +260,7 @@ public class TicketServiceImpl implements TicketService{
             try {
                 deleteTicket(ticketDetail.getTicketId());
                 ticketDetailDao.delete(ticketDetail.getId());
+                trainDao.delete(ticketDetail.getTrainId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
