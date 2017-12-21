@@ -207,7 +207,7 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public void resetData(long seats) {
-        this.TOTAL_SEATS = seats;
+        TOTAL_SEATS = seats;
         trainDao.deleteAll();
         passengerDao.deleteAll();
         ticketDao.deleteAll();
