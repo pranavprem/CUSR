@@ -97,16 +97,29 @@ public class SearchServiceImpl implements SearchService {
 			trainsList.remove(0);
 			route.remove(0);
 		}
-		
-		
+		int fare = 0;
+		for (String train : trainsList) {
+			int temp = (train.substring(4,6).equals("00")) ? 2 : 1;
+			fare = (temp > fare) ? temp : temp;
+		}
+		int cost = cost(route.get(0), route.get(route.size() -1),1,fare);
 		result.setTrains(trainsList);
 		result.setRoute(route);
 		returnlist.add(result);
+		result.setCost(cost);
 		
 		return result;
 	}
-	
-	
+
+	public int cost(String o, String d, int pcount, int trainfare)
+	{
+		char co = o.charAt(0);
+		char cd = d.charAt(0);
+		int diff = Math.abs(co-cd);
+		int cost = diff/5;
+
+		return (diff%5 > 0 ? cost : cost) * pcount * trainfare;
+	}
 	
 	public SearchResult searchregular(Character from, Character to, String time) {
 		Search search = new Search();
