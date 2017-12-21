@@ -159,8 +159,9 @@ public class UserController {
 	public ResponseEntity updateUser(@PathVariable("id") long userId,
 			@RequestParam(value="firstName" , required=false) String firstName,
 			@RequestParam(value="lastName" , required = false) String lastName,
-			@RequestParam(value="email", required = false) String email,
-			@RequestParam(value="token", required = false) String token){
+			@RequestParam(value="email", required = true) String email,
+			@RequestParam(value="token", required = false) String token,
+			@RequestParam(value="password", required = true) String password){
 		
 			try {
 				
@@ -180,6 +181,7 @@ public class UserController {
 						user.setLastName(lastName);
 						user.setEmail(email);
 						user.setToken(token);
+						user.setPassword(password);
 					
 						this.userService.updateUser(user);			
 			
