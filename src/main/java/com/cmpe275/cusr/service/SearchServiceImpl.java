@@ -99,24 +99,23 @@ public class SearchServiceImpl implements SearchService {
 		}
 		int fare = 0;
 		for (String train : trainsList) {
-			int temp = (train.substring(4,6).equals("00")) ? 2 : 1;
-			fare = (temp > fare) ? temp : temp;
+			fare += cost(route.get(0), route.get(route.size() -1),1,train);
 		}
-		int cost = cost(route.get(0), route.get(route.size() -1),1,fare);
 		result.setTrains(trainsList);
 		result.setRoute(route);
-		result.setCost(cost);
+		result.setCost(fare);
 		returnlist.add(result);
 		
 		return result;
 	}
 
-	public int cost(String o, String d, int pcount, int trainfare)
+	public int cost(String o, String d, int pcount, String trainId)
 	{
 		char co = o.charAt(0);
 		char cd = d.charAt(0);
 		int diff = Math.abs(co-cd);
 		int cost = diff/5;
+		int trainfare =(trainId.substring(4,6).equals("00")) ? 2 : 1;
 
 		return (diff%5 > 0 ? cost : cost) * pcount * trainfare;
 	}
@@ -140,11 +139,9 @@ public class SearchServiceImpl implements SearchService {
 		result.setRoute(route);
 		int fare = 0;
 		for (String train : trainsList) {
-			int temp = (train.substring(4,6).equals("00")) ? 2 : 1;
-			fare = (temp > fare) ? temp : temp;
+			fare += cost(route.get(0), route.get(route.size() -1),1,train);
 		}
-		int cost = cost(route.get(0), route.get(route.size() -1),1,fare);
-		result.setCost(cost);
+		result.setCost(fare);
 		returnlist.add(result);
 		return result;
 	}
