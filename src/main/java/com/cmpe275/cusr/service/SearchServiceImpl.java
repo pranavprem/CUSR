@@ -138,6 +138,13 @@ public class SearchServiceImpl implements SearchService {
 		route.add(""+to);
 		result.setTrains(trainsList);
 		result.setRoute(route);
+		int fare = 0;
+		for (String train : trainsList) {
+			int temp = (train.substring(4,6).equals("00")) ? 2 : 1;
+			fare = (temp > fare) ? temp : temp;
+		}
+		int cost = cost(route.get(0), route.get(route.size() -1),1,fare);
+		result.setCost(cost);
 		returnlist.add(result);
 		return result;
 	}
