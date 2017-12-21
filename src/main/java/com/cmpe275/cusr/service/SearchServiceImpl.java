@@ -105,8 +105,8 @@ public class SearchServiceImpl implements SearchService {
 		int cost = cost(route.get(0), route.get(route.size() -1),1,fare);
 		result.setTrains(trainsList);
 		result.setRoute(route);
-		returnlist.add(result);
 		result.setCost(cost);
+		returnlist.add(result);
 		
 		return result;
 	}
