@@ -233,8 +233,8 @@ public class TicketServiceImpl implements TicketService{
         	body += "<p>Train: " + train.getTrain() + "</p>";
         	body += "<p>Departure Station: " + train.getDepartureStation() + "</p>";
         	body += "<p>Arrival Station: " + train.getArrivalStation() + "</p>";
-        	body += "<p>Departure Time: " + train.getDepartureTime().substring(0, 4) +  "</p>";
-        	body += "<p>Arrival Time: " + train.getArrivalTime().substring(0, 4) + "</p>";
+        	body += "<p>Departure Time: " + train.getDepartureTime().substring(0, 5) +  "</p>";
+        	body += "<p>Arrival Time: " + train.getArrivalTime().substring(0, 5) + "</p>";
         	body += "<br>";    	
         }        
         body += "</body></html>";        
