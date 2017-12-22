@@ -43,7 +43,6 @@ public class SearchServiceImpl implements SearchService {
 		SearchResult result;
 		for(int i=0;i<120;i+=15) {
 			flag=true;
-			timeobj.setMinutes(timeobj.getMinutes()+15);
 			if(timeobj.getMinutes()!=0) {
 				returnlist.add(this.searchregular(from, to, df.format(timeobj)));
 				
@@ -57,6 +56,7 @@ public class SearchServiceImpl implements SearchService {
 			if(flag) {
 				returnlist.add(result);
 			}
+			timeobj.setMinutes(timeobj.getMinutes()+15);
 		}
 		
 		Set<SearchResult> hs = new HashSet<SearchResult>();
@@ -189,8 +189,7 @@ public class SearchServiceImpl implements SearchService {
 		SearchResult result, result2;
 		for(int i=0;i<120;i+=15) {
 			flag=true;
-			timeobj.setMinutes(timeobj.getMinutes()+15);
-			timeobj2.setMinutes(timeobj2.getMinutes()+15);
+
 			if(timeobj.getMinutes()!=0) {
 				result = this.searchregular(from, to, df.format(timeobj));
 				result2 = this.searchregular(to, from, df.format(timeobj2));
@@ -214,6 +213,8 @@ public class SearchServiceImpl implements SearchService {
 			if(flag) {
 				returnlist.add(result);
 			}
+			timeobj.setMinutes(timeobj.getMinutes()+15);
+			timeobj2.setMinutes(timeobj2.getMinutes()+15);
 		}
 		
 		Set<SearchResult> hs = new HashSet<SearchResult>();

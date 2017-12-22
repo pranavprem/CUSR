@@ -1,13 +1,7 @@
 package com.cmpe275.cusr.service;
 
-import com.cmpe275.cusr.dao.PassengerDao;
-import com.cmpe275.cusr.dao.TicketDao;
-import com.cmpe275.cusr.dao.TicketDetailDao;
-import com.cmpe275.cusr.dao.TrainDao;
-import com.cmpe275.cusr.model.Passenger;
-import com.cmpe275.cusr.model.Ticket;
-import com.cmpe275.cusr.model.TicketDetail;
-import com.cmpe275.cusr.model.Train;
+import com.cmpe275.cusr.dao.*;
+import com.cmpe275.cusr.model.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +25,10 @@ public class TicketServiceImpl implements TicketService{
     private TrainDao trainDao;
     @Autowired
     private TicketDetailDao ticketDetailDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private EmailService emailService;
 
     private static long TOTAL_SEATS = 1000;
 
@@ -259,6 +257,13 @@ public class TicketServiceImpl implements TicketService{
         for (TicketDetail ticketDetail : ticketDetails) {
             try {
                 deleteTicket(ticketDetail.getTicketId());
+                Ticket ticket = ticketDao.findOne(ticketDetail.getTicketId());
+                User user = userDao.findOne(ticket.getUserId());
+                String email = user.getEmail();
+                String subject = "Ticket Cancellation";
+                String body = "<html><body>Ticket has been cancelled.</body></html>";
+
+                emailService.send("california.usr@gmail.com", email, subject, body);
                 ticketDetailDao.delete(ticketDetail.getId());
                 trainDao.delete(ticketDetail.getTrainId());
             } catch (Exception e) {
