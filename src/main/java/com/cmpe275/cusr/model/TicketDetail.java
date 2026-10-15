@@ -1,6 +1,6 @@
 package com.cmpe275.cusr.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ticketDetail")
@@ -10,8 +10,10 @@ public class TicketDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
     @Column(name = "trainId")
     private String trainId;
+
     @Column(name = "ticketId")
     private long ticketId;
 

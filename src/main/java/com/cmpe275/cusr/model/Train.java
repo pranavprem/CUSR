@@ -1,85 +1,90 @@
 package com.cmpe275.cusr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table ( name = "train")
+@Table(name = "train")
 public class Train {
 
-	@Id
-	@Column(name = "id")
-	private String train;
-	@Column(name = "seats")
-	private long seats;
-	@Column(name = "departureStation")
-	private String departureStation;
-	@Column(name = "arrivalStation")
-	private String arrivalStation;
-	@Column(name = "departureTime")
-	private String departureTime;
-	@Column(name = "arrivalTime")
-	private String arrivalTime;
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "ticket_id")
-	private Ticket ticket;
+    @Id
+    @Column(name = "id")
+    private String train;
 
-	public long getSeats() {
-		return seats;
-	}
+    @Column(name = "seats")
+    private long seats;
 
-	public void setSeats(long seats) {
-		this.seats = seats;
-	}
+    @Column(name = "departureStation")
+    private String departureStation;
 
-	public String getDepartureStation() {
-		return departureStation;
-	}
+    @Column(name = "arrivalStation")
+    private String arrivalStation;
 
-	public void setDepartureStation(String departureStation) {
-		this.departureStation = departureStation;
-	}
+    @Column(name = "departureTime")
+    private String departureTime;
 
-	public String getArrivalStation() {
-		return arrivalStation;
-	}
+    @Column(name = "arrivalTime")
+    private String arrivalTime;
 
-	public void setArrivalStation(String arrivalStation) {
-		this.arrivalStation = arrivalStation;
-	}
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "ticket_id")
+    private Ticket ticket;
 
-	public String getDepartureTime() {
-		return departureTime;
-	}
+    public long getSeats() {
+        return seats;
+    }
 
-	public void setDepartureTime(String departureTime) {
-		this.departureTime = departureTime;
-	}
+    public void setSeats(long seats) {
+        this.seats = seats;
+    }
 
-	public String getArrivalTime() {
+    public String getDepartureStation() {
+        return departureStation;
+    }
 
-		return arrivalTime;
-	}
+    public void setDepartureStation(String departureStation) {
+        this.departureStation = departureStation;
+    }
 
-	public void setArrivalTime(String arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
+    public String getArrivalStation() {
+        return arrivalStation;
+    }
 
-	public Ticket getTicket() {
-		return ticket;
-	}
+    public void setArrivalStation(String arrivalStation) {
+        this.arrivalStation = arrivalStation;
+    }
 
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
+    public String getDepartureTime() {
+        return departureTime;
+    }
 
-	public String getTrain() {
-		return train;
-	}
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
 
-	public void setTrain(String train) {
-		this.train = train;
-	}
+    public String getArrivalTime() {
+
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public String getTrain() {
+        return train;
+    }
+
+    public void setTrain(String train) {
+        this.train = train;
+    }
 }

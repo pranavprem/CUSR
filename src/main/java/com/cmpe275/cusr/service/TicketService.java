@@ -1,8 +1,6 @@
 package com.cmpe275.cusr.service;
 
 import com.cmpe275.cusr.model.Ticket;
-import com.cmpe275.cusr.model.Train;
-
 import java.util.List;
 
 public interface TicketService {
@@ -22,7 +20,7 @@ public interface TicketService {
     void cancelTrain(String trainId) throws Exception;
 
     Ticket getTicketDetail(long ticketId) throws Exception;
-    
+
     String getEmailBody(Ticket ticket) throws Exception;
 
     int cost(String o, String d, int pcount, int trainfare);

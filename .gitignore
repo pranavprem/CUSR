@@ -1,6 +1,20 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+# Local H2 database
+data/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Node (the react-code branch)
+node_modules/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -15,6 +29,9 @@ target/
 *.iml
 *.ipr
 
+### VS Code ###
+.vscode/
+
 ### NetBeans ###
 nbproject/private/
 build/
@@ -22,3 +39,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### OS ###
+.DS_Store
+Thumbs.db

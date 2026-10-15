@@ -1,93 +1,85 @@
 package com.cmpe275.cusr.service;
 
-import org.hibernate.exception.ConstraintViolationException;
+import com.cmpe275.cusr.dao.UserDao;
+import com.cmpe275.cusr.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cmpe275.cusr.dao.UserDao;
-import com.cmpe275.cusr.model.User;
-
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserDao userDao;
-	
-	@Override
-	public void addUser(User user) throws Exception{
-		// TODO Auto-generated method stub
-		try {
-			
-			userDao.save(user);
-			
-		} catch (DataIntegrityViolationException e) {
+    @Autowired
+    private UserDao userDao;
 
-			throw new DataIntegrityViolationException(null, null);
+    @Override
+    public void addUser(User user) throws Exception {
+        // TODO Auto-generated method stub
+        try {
 
-		} catch (Exception e) {
+            userDao.save(user);
 
-			throw new Exception();
-		}
-		
-	}
+        } catch (DataIntegrityViolationException e) {
 
-	@Override
-	public void deleteUser(long id) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			
-			userDao.delete(id);
-		
-		} catch (Exception e) {
+            throw new DataIntegrityViolationException(null, null);
 
-			throw new Exception();
-		}
-				
-	}
+        } catch (Exception e) {
 
-	@Override
-	public User updateUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			
-			return userDao.save(user);
-		
-		}catch(Exception e) {
-			
-			throw new Exception();
+            throw new Exception();
+        }
+    }
 
-		}
-	}
+    @Override
+    public void deleteUser(long id) throws Exception {
+        // TODO Auto-generated method stub
+        try {
 
-	@Override
-	public User getUser(long id) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			return userDao.findOne(id);
-		
-		}catch(Exception e) {
-		
-			throw new Exception();
+            userDao.deleteById(id);
 
-		}
-	}
+        } catch (Exception e) {
 
-	@Override
-	public User findbyemail(String email) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			
-			User user = userDao.findByemail(email);
-			return user;
-			
-		}catch(Exception e) {
-			
-			throw new Exception();
+            throw new Exception();
+        }
+    }
 
-		}
-	}	
+    @Override
+    public User updateUser(User user) throws Exception {
+        // TODO Auto-generated method stub
+        try {
 
+            return userDao.save(user);
+
+        } catch (Exception e) {
+
+            throw new Exception();
+        }
+    }
+
+    @Override
+    public User getUser(long id) throws Exception {
+        // TODO Auto-generated method stub
+        try {
+            return userDao.findById(id).orElse(null);
+
+        } catch (Exception e) {
+
+            throw new Exception();
+        }
+    }
+
+    @Override
+    public User findbyemail(String email) throws Exception {
+        // TODO Auto-generated method stub
+        try {
+
+            User user = userDao.findByemail(email);
+            return user;
+
+        } catch (Exception e) {
+
+            throw new Exception();
+        }
+    }
 }

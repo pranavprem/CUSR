@@ -1,9 +1,11 @@
 package com.cmpe275.cusr.service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -11,36 +13,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-	private JavaMailSender javaMailSender;
+    private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    @Autowired
-    public EmailServiceImpl(JavaMailSender javaMailSender) {
+    private final ObjectProvider<JavaMailSender> javaMailSender;
+
+    @Value("${cusr.mail.from:noreply@localhost}")
+    private String defaultFrom;
+
+    @Value("${spring.mail.username:}")
+    private String mailUsername;
+
+    public EmailServiceImpl(ObjectProvider<JavaMailSender> javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
     @Override
     public void send(String from, String to, String title, String body) {
-        
+        JavaMailSender sender = javaMailSender.getIfAvailable();
+        if (sender == null || mailUsername == null || mailUsername.isBlank()) {
+            log.info("SMTP is not configured; not sending '{}' to {}", title, to);
+            return;
+        }
+
         try {
-        	MimeMessage message = this.javaMailSender.createMimeMessage();
+            MimeMessage message = sender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message);
-            
-            if (from != null) {
-                mimeMessageHelper.setFrom(from);
-            }
+            String senderAddress = (from == null || from.isBlank()) ? defaultFrom : from;
+            mimeMessageHelper.setFrom(senderAddress);
             mimeMessageHelper.setSubject(title);
-            mimeMessageHelper.setText(body,true);
+            mimeMessageHelper.setText(body, true);
             mimeMessageHelper.setTo(to);
-            
-            this.javaMailSender.send(message);
+            sender.send(message);
         } catch (MessagingException messageException) {
-            // You could also 'throw' this exception. I am not a fan of checked exceptions. 
-            // If you want to go that route, then just update this method and the interface. 
             throw new RuntimeException(messageException);
         }
     }
-	
-	
-	
-
 }
