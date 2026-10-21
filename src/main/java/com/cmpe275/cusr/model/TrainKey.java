@@ -1,7 +1,7 @@
 package com.cmpe275.cusr.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
@@ -9,6 +9,7 @@ public class TrainKey implements Serializable {
 
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "date", nullable = false)
     private String date;
 

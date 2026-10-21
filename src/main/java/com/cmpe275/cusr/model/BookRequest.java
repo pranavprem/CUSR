@@ -1,15 +1,20 @@
 package com.cmpe275.cusr.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import java.util.List;
 
 public class BookRequest {
 
+    @JsonAlias("userid")
     private long userId;
+
     private List<String> trains;
     private List<String> route;
     private int cost;
     private String arrival1;
     private String arrival2;
+
+    @JsonAlias("passenger")
     private List<String> passengers;
 
     public long getUserId() {

@@ -1,24 +1,26 @@
 package com.cmpe275.cusr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table (name = "ticket")
+@Table(name = "ticket")
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
     @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
     private List<Train> trains;
+
     @Column(name = "cost")
     private long cost;
+
     @Transient
     private List<Passenger> passenger;
+
     @Column(name = "userId")
     private long userId;
 
