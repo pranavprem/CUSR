@@ -37,7 +37,7 @@ There is no UI on this branch, so this README does not include a screenshot. The
 | Piece | Then (2017) | Now |
 | --- | --- | --- |
 | Language | Java 8 | Java 21 |
-| Framework | Spring Boot 1.5.9 | Spring Boot 4.1.1 |
+| Framework | Spring Boot 1.5.9 | Spring Boot 4.1.2 |
 | Persistence | Hibernate + MySQL on AWS RDS | Spring Data JPA, H2 by default, MySQL optional |
 | Mail | Gmail SMTP | Spring Mail, off unless you set SMTP env vars |
 | Time math | Joda-Time 2.8.1 | Joda-Time 2.15.0 |

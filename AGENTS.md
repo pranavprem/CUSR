@@ -27,7 +27,7 @@ CI is `.github/workflows/ci.yml` and runs `./mvnw -B verify`.
 
 ## Conventions
 
-- Java 21, Spring Boot 4.1.1, Jakarta (`jakarta.persistence`, `jakarta.servlet`, `jakarta.mail`).
+- Java 21, Spring Boot 4.1.2, Jakarta (`jakarta.persistence`, `jakarta.servlet`, `jakarta.mail`).
 - Format with Spotless (Palantir Java Format) rather than hand-wrapping. `verify` fails the build when the format drifts.
 - Constructor injection is fine for new code. Existing services use field `@Autowired`; match the file you are editing.
 - Prefer env vars over new entries in `application.properties`. Never commit passwords, SMTP credentials, or database hosts.
